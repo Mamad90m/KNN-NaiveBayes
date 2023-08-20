@@ -1,7 +1,7 @@
 KNN and Naive Bayes for Wisconsin Breast Cancer Diagnistic Data
 ================
 
-\##Loading Required Libraries
+Required Libraries
 
 ``` r
 library(readxl)
@@ -13,13 +13,13 @@ library(dplyr)
 library(tidyverse)
 ```
 
-\##Dataset
+Dataset
 
 ``` r
 breast_cancer_data <- read_excel("D:/My Documents/pdf/R/data.R/breast cancer data.xlsx")
 ```
 
-\##Preprocessing
+Preprocessing
 
 ``` r
 wbcd <- data.frame(breast_cancer_data)
@@ -43,7 +43,7 @@ normalize <- function(x){
 wbcd <- as.data.frame(lapply(wbcd[2:31], normalize))
 ```
 
-\##Training and Test sets
+Training and Test sets
 
 ``` r
 data_train <- wbcd[1:470, ]
@@ -52,14 +52,14 @@ diagnosis_train <- diagnosis[1:470]
 diagnosis_test <- diagnosis[471:570]
 ```
 
-\##Blocs for K-Fold Cross Validation
+Blocs for K-Fold Cross Validation
 
 ``` r
 K <- 10
 folds <- cut(seq(1, nrow(data_train)), breaks = K, labels = FALSE)
 ```
 
-\##Function for ConfusionMatrix
+Function for ConfusionMatrix
 
 ``` r
 statistics <- function(Actual, Predicted) {
@@ -79,7 +79,7 @@ statistics <- function(Actual, Predicted) {
 }
 ```
 
-\##Performing K-Fold Cross Validation for KNN
+Performing K-Fold Cross Validation for KNN
 
 ``` r
 k <- 55
@@ -123,7 +123,7 @@ testSpecificity[i, j] <- statistics(Actual = test_labels, Predicted = testPred)[
 }
 ```
 
-\##Accuracy Plot
+Accuracy Plot
 
 ``` r
 Metric <- data.frame(c(rep("training", k), rep("test", k)), rep(seq(1:k), 2), 
@@ -140,7 +140,7 @@ ggplot(aes(x = k, y = Accuracy, group = Data, colour = Data)) +
 
 ![](Mark_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-\##Metrics Data Frame
+Metrics Data Frame
 
 ``` r
 Metrics <- data.frame(k = 1:55, accuracy = colMeans(testAccuracy), 
@@ -179,13 +179,13 @@ odd_k_Metrics
     ## 53 53 0.9489362  0.9923077   0.8567222   0.9968750
     ## 55 55 0.9446809  0.9923077   0.8459035   0.9968750
 
-\##Optimum Value for k
+Optimum Value for k
 
 ``` r
  k_opt <- which(odd_k_Metrics$accuracy == max(odd_k_Metrics$accuracy))
 ```
 
-\##Predict with Finala Model
+Predict with Finala Model
 
 ``` r
 knn.model <- knn(train = data_train, test = data_test, 
@@ -194,7 +194,7 @@ knn.model <- knn(train = data_train, test = data_test,
 knn_cm <- statistics(Actual = diagnosis_test, Predicted = knn.model)
 ```
 
-\##Naive Bayes
+Naive Bayes
 
 ``` r
 breast_cancer_data <- read_excel("D:/My Documents/pdf/R/data.R/breast cancer data.xlsx")
@@ -204,7 +204,7 @@ diagnosis <- wbcd$diagnosis <- factor(wbcd$diagnosis, levels = c("B", "M"),
                          labels = c("Benign", "Malignant"))
 ```
 
-\##Removing Highly Corrolated Variables
+Removing Highly Corrolated Variables
 
 ``` r
 sum(apply(cor(wbcd[, 2:31]), 2, function(x) sum(ifelse(x > 0.6, TRUE, FALSE))))
@@ -229,7 +229,7 @@ corrplot(cor(wbcd[, -1]))
 
 ![](Mark_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
 
-\##Training and Test Sets
+Training and Test Sets
 
 ``` r
 wbcd <- cbind(wbcd, diagnosis)
@@ -239,7 +239,7 @@ x <- data_train[, 1:8]
 y <- data_train[, 9]
 ```
 
-\##Performing K-Fold Cross Validation for Naive Bayes
+Performing K-Fold Cross Validation for Naive Bayes
 
 ``` r
 train_control <- trainControl(method = "cv", number = 10)
@@ -249,7 +249,7 @@ nb.model <- train(x = x, y = y, method = "nb", trControl = train_control, tuneGr
 grid, preProc = c("BoxCox", "center", "scale", "pca"))
 ```
 
-\##Accuracy plot
+Accuracy plot
 
 ``` r
 plot(nb.model)
@@ -257,14 +257,14 @@ plot(nb.model)
 
 ![](Mark_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
-\##Predict with Final model
+Predict with Final model
 
 ``` r
 pred <- predict(nb.model, newdata = data_test)
 nb_cm <- confusionMatrix(pred, data_test[, 9])
 ```
 
-\##Comparison of Two Models
+Comparison of Two Models
 
 ``` r
 com_metric <- data.frame(Model = c("KNN", "Naive Bayes"), Accuracy = 
@@ -282,7 +282,7 @@ theme(axis.text.x = element_text(angle = 90,hjust =0 )) +
 
 ![](Mark_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
-\##Conclusion
+Conclusion
 
 Two machine learning techniques, K-nearest neighbors (KNN) and Naive
 Bayes, were used to classify a dataset of breast cancer into two
