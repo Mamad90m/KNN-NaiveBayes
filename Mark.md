@@ -268,18 +268,19 @@ nb_cm <- confusionMatrix(pred, data_test[, 9])
 Comparison of Two Models
 
 ``` r
-com_metric <- data.frame(Model = c("KNN", "Naive Bayes"), Accuracy = 
-c(knn_cm[[2]], nb_cm[[4]][2]), Sensitivity = c(knn_cm[[3]], 
-nb_cm[[4]][3]), Specificity = c(knn_cm[[4]], nb_cm[[4]][3]))
-com_metric
+com_metrics <- data.frame(Model = c("KNN", "Naive Bayes"), Accuracy = 
+c(knn_cm[[2]], as.numeric(nb_cm[[3]][1])), Sensitivity = c(knn_cm[[3]], 
+as.numeric(nb_cm[[4]][1])), Specificity = c(knn_cm[[4]], 
+as.numeric(nb_cm[[4]][2])))
+com_metrics
 ```
 
-    ##                   Model  Accuracy Sensitivity Specificity
-    ##                     KNN 0.9700000   0.9772727   0.9555556
-    ## Specificity Naive Bayes 0.8695652   0.9615385   0.9615385
+    ##         Model Accuracy Sensitivity Specificity
+    ## 1         KNN     0.97   0.9772727   0.9555556
+    ## 2 Naive Bayes     0.95   0.9740260   0.8695652
 
 ``` r
-complong <- gather(com_metric, key = "measure", value = "value", c("Accuracy", "Sensitivity", "Specificity"))
+complong <- gather(com_metrics, key = "measure", value = "value", c("Accuracy", "Sensitivity", "Specificity"))
 
 complong %>% 
   ggplot(aes(x = Model, y = value, fill = measure)) +
@@ -294,6 +295,6 @@ Conclusion
 
 Two machine learning techniques, K-nearest neighbors (KNN) and Naive
 Bayes, were used to classify a data set of breast cancer into two
-categories: Malignant and Benign. KNN had a slightly higher accuracy and
-sensitivity than Naive Bayes. This suggests that KNN is a better method
-for this particular data set.
+categories: Malignant and Benign. KNN had a slightly higher accuracy,
+sensitivity, and specificity than Naive Bayes. This suggests that KNN is
+a better method for this particular data set.
