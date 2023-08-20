@@ -1,4 +1,5 @@
-KNN and Naive Bayes for Wisconsin Breast Cancer Diagnistic Data
+Comparison of KNN and Naive Bayes for Classification of Breast Cancer
+Diagnostic Data
 ================
 
 Required Libraries

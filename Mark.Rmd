@@ -1,5 +1,5 @@
 ---
-title: "KNN and Naive Bayes for Wisconsin Breast Cancer Diagnistic Data"
+title: "Comparison of KNN and Naive Bayes for Classification of Breast Cancer Diagnostic Data"
 output: github_document
 ---
 
