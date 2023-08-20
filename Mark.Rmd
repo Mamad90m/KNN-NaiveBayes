@@ -151,7 +151,7 @@ Metrics Data Frame
 
 ```{r}
 Metrics <- data.frame(k = 1:55, accuracy = colMeans(testAccuracy), 
-precission = colMeans(testPrecission), sensitivity = colMeans(testSensitivity), specificity = colMeans(testSpecificity))
+sensitivity = colMeans(testSensitivity), specificity = colMeans(testSpecificity))
 odd_k_Metrics <- Metrics[seq(1, 55, by = 2), ]
 odd_k_Metrics
 ```
@@ -235,6 +235,7 @@ Comparison of Two Models
 com_metric <- data.frame(Model = c("KNN", "Naive Bayes"), Accuracy = 
 c(knn_cm[[2]], nb_cm[[4]][2]), Sensitivity = c(knn_cm[[3]], 
 nb_cm[[4]][3]), Specificity = c(knn_cm[[4]], nb_cm[[4]][3]))
+com_metric
 
 complong <- gather(com_metric, key = "measure", value = "value", c("Accuracy", "Sensitivity", "Specificity"))
 
@@ -249,7 +250,7 @@ theme(axis.text.x = element_text(angle = 90,hjust =0 )) +
 Conclusion
 
 Two machine learning techniques, K-nearest neighbors (KNN) and Naive Bayes, 
-were used to classify a data set of breast cancer into two categories: Malignant and Benign KNN had a slightly higher accuracy, sensitivity, and specificity than Naive Bayes. This suggests that KNN is a better method for this particular data set.
+were used to classify a data set of breast cancer into two categories: Malignant and Benign. KNN had a slightly higher accuracy and sensitivity than Naive Bayes. This suggests that KNN is a better method for this particular data set.
 
 
 
