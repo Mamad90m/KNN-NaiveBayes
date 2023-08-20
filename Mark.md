@@ -285,7 +285,7 @@ theme(axis.text.x = element_text(angle = 90,hjust =0 )) +
 Conclusion
 
 Two machine learning techniques, K-nearest neighbors (KNN) and Naive
-Bayes, were used to classify a dataset of breast cancer into two
+Bayes, were used to classify a data set of breast cancer into two
 categories: Malignant and Benign KNN had a slightly higher accuracy,
 sensitivity, and specificity than Naive Bayes. This suggests that KNN is
-a better method for this particular dataset.
+a better method for this particular data set.
